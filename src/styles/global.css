@@ -8,8 +8,8 @@
   --color-green-dim: rgba(0, 255, 148, 0.12);
   --color-purple: #7B2FFF;
   --color-purple-dim: rgba(123, 47, 255, 0.12);
-  --color-cyan: #00D4FF;
-  --color-cyan-dim: rgba(0, 212, 255, 0.12);
+  --color-blue: #3B82F6;
+  --color-blue-dim: rgba(59, 130, 246, 0.12);
   --color-text: #F0F0F5;
   --color-text-muted: rgba(240, 240, 245, 0.6);
   --color-text-subtle: rgba(240, 240, 245, 0.35);
@@ -37,7 +37,7 @@
 
   --shadow-green: 0 0 24px rgba(0, 255, 148, 0.3), 0 0 64px rgba(0, 255, 148, 0.12);
   --shadow-purple: 0 0 24px rgba(123, 47, 255, 0.4), 0 0 64px rgba(123, 47, 255, 0.16);
-  --shadow-cyan: 0 0 24px rgba(0, 212, 255, 0.3), 0 0 64px rgba(0, 212, 255, 0.12);
+  --shadow-blue: 0 0 24px rgba(59, 130, 246, 0.3), 0 0 64px rgba(59, 130, 246, 0.12);
   --shadow-card: 0 4px 32px rgba(0, 0, 0, 0.5);
 }
 
@@ -123,14 +123,14 @@ ul, ol {
 }
 
 .gradient-text-green {
-  background: linear-gradient(135deg, var(--color-green) 0%, var(--color-cyan) 100%);
+  background: linear-gradient(135deg, var(--color-green) 0%, var(--color-blue) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .gradient-text-purple {
-  background: linear-gradient(135deg, var(--color-purple) 0%, var(--color-cyan) 100%);
+  background: linear-gradient(135deg, var(--color-purple) 0%, var(--color-blue) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

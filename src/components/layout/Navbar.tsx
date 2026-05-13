@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { useScrollY } from '@/hooks/useScrollY';
+import Logo from '@/components/ui/Logo';
 import styles from './Navbar.module.css';
 import clsx from 'clsx';
 
@@ -23,7 +24,7 @@ export default function Navbar() {
     <header className={clsx(styles.navbar, isScrolled && styles.scrolled)}>
       <div className={styles.inner}>
         <Link to="/" className={styles.logo} onClick={() => setMenuOpen(false)}>
-          <span className={styles.logoMark}>S</span>
+          <Logo size={32} />
           <span className={styles.logoText}>SLING</span>
         </Link>
 

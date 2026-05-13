@@ -35,7 +35,7 @@ export default function HeroBackground() {
       alpha: Math.random() * 0.5 + 0.1,
     }));
 
-    const colors = ['#00FF94', '#7B2FFF', '#00D4FF'];
+    const colors = ['#00FF94', '#7B2FFF', '#3B82F6'];
 
     const draw = () => {
       ctx.clearRect(0, 0, width, height);

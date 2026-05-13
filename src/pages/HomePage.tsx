@@ -16,26 +16,26 @@ const TOKENS = [
 ];
 
 const STEPS = [
-  {
-    icon: '💳',
-    step: '01',
-    title: 'Pay Locally',
-    desc: 'Send PKR via JazzCash or EasyPaisa to Sling — no bank account required.',
+  { 
+    icon: '💳', 
+    step: '01', 
+    title: 'Pay Locally', 
+    desc: 'Send PKR via JazzCash or EasyPaisa to Sling — no bank account required.', 
     color: 'var(--color-green)',
   },
-  {
-    icon: '⚡',
-    step: '02',
-    title: 'Sling Converts',
-    desc: 'We instantly convert your PKR to crypto at the best available market rate.',
+  { 
+    icon: '⚡', 
+    step: '02', 
+    title: 'Sling Converts', 
+    desc: 'We instantly convert your PKR to crypto at the best available market rate.', 
     color: 'var(--color-purple)',
   },
-  {
-    icon: '📈',
-    step: '03',
-    title: 'You Trade',
-    desc: 'Track, trade, and manage your BTC, ETH, and USDT from your Sling dashboard.',
-    color: 'var(--color-cyan)',
+  { 
+    icon: '📈', 
+    step: '03', 
+    title: 'You Trade', 
+    desc: 'Track, trade, and manage your BTC, ETH, and USDT from your Sling dashboard.', 
+    color: 'var(--color-blue)',
   },
 ];
 
@@ -57,7 +57,7 @@ export default function HomePage() {
         <HeroBackground />
         <div className={styles.heroGradient} aria-hidden="true" />
         <div className={styles.heroContent}>
-          <motion.div
+          <motion.div 
             initial={{ opacity: 0, y: -16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45 }}
@@ -67,7 +67,7 @@ export default function HomePage() {
             Now accepting waitlist signups
           </motion.div>
 
-          <motion.h1
+          <motion.h1 
             className={styles.heroTitle}
             initial={{ opacity: 0, y: 32 }}
             animate={{ opacity: 1, y: 0 }}
@@ -79,7 +79,7 @@ export default function HomePage() {
             to Crypto
           </motion.h1>
 
-          <motion.p
+          <motion.p 
             className={styles.heroSub}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -90,7 +90,7 @@ export default function HomePage() {
             No bank. No hassle. Just Sling.
           </motion.p>
 
-          <motion.div
+          <motion.div 
             className={styles.heroActions}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -104,7 +104,7 @@ export default function HomePage() {
             </a>
           </motion.div>
 
-          <motion.div
+          <motion.div 
             className={styles.tokenRow}
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -115,7 +115,7 @@ export default function HomePage() {
             ))}
           </motion.div>
 
-          <motion.p
+          <motion.p 
             className={styles.counterText}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -129,7 +129,7 @@ export default function HomePage() {
         </div>
 
         <a href="#how-it-works" className={styles.scrollHint} aria-label="Scroll to how it works">
-          <motion.div
+          <motion.div 
             animate={{ y: [0, 8, 0] }}
             transition={{ repeat: Infinity, duration: 1.8, ease: 'easeInOut' }}
           >
@@ -151,7 +151,7 @@ export default function HomePage() {
         <div className={styles.stepsGrid}>
           {STEPS.map((step, i) => (
             <SectionReveal key={step.step} delay={i * 0.12}>
-              <GlassCard className={styles.stepCard} glow="green">
+              <GlassCard className={styles.stepCard} glow={i === 2 ? 'blue' : i === 1 ? 'purple' : 'green'}>
                 <div className={styles.stepNumber} style={{ color: step.color }}>{step.step}</div>
                 <div className={styles.stepIcon}>{step.icon}</div>
                 <h3 className={styles.stepTitle}>{step.title}</h3>
@@ -173,8 +173,8 @@ export default function HomePage() {
                 <span className={styles.paymentDot} style={{ background: 'var(--color-green)' }} />
                 JazzCash
               </div>
-              <div className={styles.paymentBadge} style={{ color: 'var(--color-cyan)', borderColor: 'rgba(0,212,255,0.4)' }}>
-                <span className={styles.paymentDot} style={{ background: 'var(--color-cyan)' }} />
+              <div className={styles.paymentBadge} style={{ color: 'var(--color-blue)', borderColor: 'rgba(59,130,246,0.4)' }}>
+                <span className={styles.paymentDot} style={{ background: 'var(--color-blue)' }} />
                 EasyPaisa
               </div>
             </div>

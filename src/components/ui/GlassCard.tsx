@@ -4,7 +4,7 @@ import styles from './GlassCard.module.css';
 type GlassCardProps = {
   children: React.ReactNode;
   className?: string;
-  glow?: 'green' | 'purple' | 'cyan' | 'none';
+  glow?: 'green' | 'purple' | 'blue' | 'none' | 'cyan';
   onClick?: () => void;
 };
 
@@ -15,6 +15,7 @@ export default function GlassCard({ children, className, glow = 'none', onClick 
         styles.card,
         glow === 'green' && styles.glowGreen,
         glow === 'purple' && styles.glowPurple,
+        glow === 'blue' && styles.glowBlue,
         glow === 'cyan' && styles.glowCyan,
         onClick && styles.clickable,
         className

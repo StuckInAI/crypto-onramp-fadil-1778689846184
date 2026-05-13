@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Twitter, Send, Instagram } from 'lucide-react';
+import Logo from '@/components/ui/Logo';
 import styles from './Footer.module.css';
 
 export default function Footer() {
@@ -8,7 +9,7 @@ export default function Footer() {
       <div className={styles.inner}>
         <div className={styles.brand}>
           <Link to="/" className={styles.logo}>
-            <span className={styles.logoMark}>S</span>
+            <Logo size={40} />
             <span className={styles.logoText}>SLING</span>
           </Link>
           <p className={styles.tagline}>
@@ -41,7 +42,7 @@ export default function Footer() {
           <div className={styles.linkGroup}>
             <h4 className={styles.groupTitle}>Payment Methods</h4>
             <div className={styles.paymentBadge} style={{ color: 'var(--color-green)' }}>JazzCash</div>
-            <div className={styles.paymentBadge} style={{ color: 'var(--color-cyan)' }}>EasyPaisa</div>
+            <div className={styles.paymentBadge} style={{ color: 'var(--color-blue)' }}>EasyPaisa</div>
           </div>
         </div>
       </div>

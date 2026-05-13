@@ -24,7 +24,7 @@
 }
 
 .primary {
-  background: linear-gradient(135deg, var(--color-green), var(--color-cyan));
+  background: linear-gradient(135deg, var(--color-green), var(--color-blue));
   color: #0A0A0F;
 }
 .primary:hover:not(:disabled) {
@@ -33,7 +33,7 @@
 }
 
 .purple {
-  background: linear-gradient(135deg, var(--color-purple), var(--color-cyan));
+  background: linear-gradient(135deg, var(--color-purple), var(--color-blue));
   color: white;
 }
 .purple:hover:not(:disabled) {
