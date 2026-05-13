@@ -94,7 +94,7 @@
   align-items: center;
   gap: 8px;
   padding: 14px 32px;
-  background: linear-gradient(135deg, var(--color-green), var(--color-cyan));
+  background: linear-gradient(135deg, var(--color-green), var(--color-blue));
   color: #0A0A0F;
   font-weight: 700;
   font-size: 15px;
@@ -102,10 +102,11 @@
   transition: opacity var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
   white-space: nowrap;
   line-height: 1;
+  border: 1px solid transparent;
 }
 
 .primaryBtn:hover {
-  opacity: 0.9;
+  opacity: 0.92;
   box-shadow: var(--shadow-green);
   transform: translateY(-2px);
 }
@@ -115,21 +116,22 @@
   align-items: center;
   gap: 8px;
   padding: 14px 32px;
-  background: transparent;
-  color: var(--color-text-muted);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--color-text);
   font-weight: 600;
   font-size: 15px;
   border-radius: var(--radius-full);
-  border: 1px solid var(--color-border);
-  transition: color var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  transition: color var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast), transform var(--transition-fast);
   white-space: nowrap;
   line-height: 1;
 }
 
 .secondaryBtn:hover {
   color: var(--color-text);
-  border-color: rgba(255, 255, 255, 0.22);
-  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.32);
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-2px);
 }
 
 .tokenRow {
@@ -375,7 +377,7 @@
   flex-direction: column;
   align-items: center;
   gap: 20px;
-  background: linear-gradient(135deg, rgba(123, 47, 255, 0.1), rgba(0, 212, 255, 0.05));
+  background: linear-gradient(135deg, rgba(123, 47, 255, 0.1), rgba(59, 130, 246, 0.05));
   border: 1px solid rgba(123, 47, 255, 0.22);
   border-radius: var(--radius-xl);
   padding: 64px 48px;
