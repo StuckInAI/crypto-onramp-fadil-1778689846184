@@ -8,20 +8,25 @@
 .btn {
   display: inline-flex;
   align-items: center;
-  padding: 13px 28px;
-  background: linear-gradient(135deg, var(--color-green), var(--color-cyan));
+  justify-content: center;
+  padding: 14px 30px;
+  background: linear-gradient(135deg, var(--color-green), var(--color-blue));
   color: #0A0A0F;
   font-weight: 700;
   font-size: 14px;
+  letter-spacing: 0.02em;
   border-radius: var(--radius-full);
-  box-shadow: var(--shadow-green), 0 8px 32px rgba(0, 0, 0, 0.4);
-  transition: opacity var(--transition-fast), transform var(--transition-fast);
+  box-shadow: var(--shadow-green), 0 8px 32px rgba(0, 0, 0, 0.5);
+  transition: opacity var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
   white-space: nowrap;
+  text-decoration: none;
+  border: 1px solid rgba(0, 255, 148, 0.5);
 }
 
 .btn:hover {
-  opacity: 0.9;
+  opacity: 0.92;
   transform: translateY(-2px);
+  box-shadow: 0 0 32px rgba(0, 255, 148, 0.5), 0 12px 40px rgba(0, 0, 0, 0.5);
 }
 
 @media (max-width: 480px) {
@@ -30,7 +35,7 @@
     right: 20px;
   }
   .btn {
-    padding: 11px 22px;
+    padding: 12px 24px;
     font-size: 13px;
   }
 }
