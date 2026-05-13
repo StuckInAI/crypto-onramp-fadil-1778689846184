@@ -16,25 +16,25 @@ const TOKENS = [
 ];
 
 const STEPS = [
-  { 
-    icon: '💳', 
-    step: '01', 
-    title: 'Pay Locally', 
-    desc: 'Send PKR via JazzCash or EasyPaisa to Sling — no bank account required.', 
+  {
+    icon: '💳',
+    step: '01',
+    title: 'Pay Locally',
+    desc: 'Send PKR via JazzCash or EasyPaisa to Sling — no bank account required.',
     color: 'var(--color-green)',
   },
-  { 
-    icon: '⚡', 
-    step: '02', 
-    title: 'Sling Converts', 
-    desc: 'We instantly convert your PKR to crypto at the best available market rate.', 
+  {
+    icon: '⚡',
+    step: '02',
+    title: 'Sling Converts',
+    desc: 'We instantly convert your PKR to crypto at the best available market rate.',
     color: 'var(--color-purple)',
   },
-  { 
-    icon: '📈', 
-    step: '03', 
-    title: 'You Trade', 
-    desc: 'Track, trade, and manage your BTC, ETH, and USDT from your Sling dashboard.', 
+  {
+    icon: '📈',
+    step: '03',
+    title: 'You Trade',
+    desc: 'Track, trade, and manage your BTC, ETH, and USDT from your Sling dashboard.',
     color: 'var(--color-blue)',
   },
 ];
@@ -48,7 +48,6 @@ const FEATURES = [
 
 export default function HomePage() {
   const waitlistCount = useWaitlistCount();
-  const displayCount = Math.max(waitlistCount, 2847);
 
   return (
     <main className={styles.page}>
@@ -57,7 +56,7 @@ export default function HomePage() {
         <HeroBackground />
         <div className={styles.heroGradient} aria-hidden="true" />
         <div className={styles.heroContent}>
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: -16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45 }}
@@ -67,7 +66,7 @@ export default function HomePage() {
             Now accepting waitlist signups
           </motion.div>
 
-          <motion.h1 
+          <motion.h1
             className={styles.heroTitle}
             initial={{ opacity: 0, y: 32 }}
             animate={{ opacity: 1, y: 0 }}
@@ -79,7 +78,7 @@ export default function HomePage() {
             to Crypto
           </motion.h1>
 
-          <motion.p 
+          <motion.p
             className={styles.heroSub}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -90,7 +89,7 @@ export default function HomePage() {
             No bank. No hassle. Just Sling.
           </motion.p>
 
-          <motion.div 
+          <motion.div
             className={styles.heroActions}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -104,7 +103,7 @@ export default function HomePage() {
             </a>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             className={styles.tokenRow}
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -115,21 +114,21 @@ export default function HomePage() {
             ))}
           </motion.div>
 
-          <motion.p 
+          <motion.p
             className={styles.counterText}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.7 }}
           >
             <span className={styles.counterNum}>
-              <AnimatedCounter target={displayCount} />
+              <AnimatedCounter target={waitlistCount} />
             </span>{' '}
-            people already on the waitlist
+            {waitlistCount === 1 ? 'person has' : 'people have'} joined the waitlist
           </motion.p>
         </div>
 
         <a href="#how-it-works" className={styles.scrollHint} aria-label="Scroll to how it works">
-          <motion.div 
+          <motion.div
             animate={{ y: [0, 8, 0] }}
             transition={{ repeat: Infinity, duration: 1.8, ease: 'easeInOut' }}
           >
