@@ -2,27 +2,35 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 18px;
+  padding: 8px 16px;
   background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid;
   border-radius: var(--radius-full);
   backdrop-filter: blur(8px);
-  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+  -webkit-backdrop-filter: blur(8px);
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
 }
 
 .badge:hover {
-  border-color: var(--token-color);
-  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  transform: translateY(-2px);
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
 }
 
 .symbol {
   font-family: var(--font-heading);
   font-weight: 700;
-  font-size: 16px;
-  color: var(--token-color);
+  font-size: 14px;
+  line-height: 1;
 }
 
 .name {
   font-size: 13px;
   color: var(--color-text-muted);
+  line-height: 1;
 }

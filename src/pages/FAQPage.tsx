@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import styles from './FAQPage.module.css';
 import SectionReveal from '@/components/ui/SectionReveal';
 
@@ -14,7 +15,7 @@ const faqs: FAQItem[] = [
   {
     category: 'General',
     question: 'What is Sling?',
-    answer: 'Sling is Pakistan\'s first dedicated crypto on-ramp platform, allowing you to buy Bitcoin, Ethereum, and USDT using local payment methods like JazzCash and EasyPaisa.',
+    answer: "Sling is Pakistan's first dedicated crypto on-ramp platform, allowing you to buy Bitcoin, Ethereum, and USDT using local payment methods like JazzCash and EasyPaisa.",
   },
   {
     category: 'General',
@@ -59,7 +60,7 @@ const faqs: FAQItem[] = [
   {
     category: 'Getting Started',
     question: 'How do I join the waitlist?',
-    answer: 'Simply click the "Join Waitlist" button on our homepage or navigate to the Waitlist page. Enter your email address and you will be notified as soon as we launch.',
+    answer: 'Simply click the "Join Waitlist" button on our homepage or navigate to the Waitlist page. Enter your details and you will be notified as soon as we launch.',
   },
   {
     category: 'Getting Started',
@@ -79,8 +80,8 @@ function FAQAccordion({ item, index }: { item: FAQItem; index: number }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <SectionReveal delay={index * 0.05}>
-      <div className={styles.faqItem}>
+    <SectionReveal delay={Math.min(index * 0.04, 0.3)}>
+      <div className={`${styles.faqItem} ${open ? styles.faqItemOpen : ''}`}>
         <button
           className={styles.faqQuestion}
           onClick={() => setOpen(!open)}
@@ -89,10 +90,10 @@ function FAQAccordion({ item, index }: { item: FAQItem; index: number }) {
           <span>{item.question}</span>
           <motion.span
             animate={{ rotate: open ? 180 : 0 }}
-            transition={{ duration: 0.2 }}
+            transition={{ duration: 0.22 }}
             className={styles.chevron}
           >
-            <ChevronDown size={20} />
+            <ChevronDown size={18} />
           </motion.span>
         </button>
         <AnimatePresence initial={false}>
@@ -102,10 +103,12 @@ function FAQAccordion({ item, index }: { item: FAQItem; index: number }) {
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: 'auto', opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.25 }}
-              className={styles.faqAnswer}
+              transition={{ duration: 0.22, ease: 'easeInOut' }}
+              style={{ overflow: 'hidden' }}
             >
-              <p>{item.answer}</p>
+              <div className={styles.faqAnswer}>
+                <p>{item.answer}</p>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
@@ -124,13 +127,16 @@ export default function FAQPage() {
   return (
     <main className={styles.page}>
       <section className={styles.hero}>
+        <div className={styles.heroGlow} aria-hidden="true" />
         <SectionReveal>
-          <div className={styles.badge}>Help Center</div>
-          <h1 className={styles.title}>Frequently Asked Questions</h1>
-          <p className={styles.subtitle}>
-            Everything you need to know about Sling. Can\'t find an answer?
-            {' '}<a href="/contact" className={styles.contactLink}>Contact us</a>.
-          </p>
+          <div className={styles.heroContent}>
+            <div className={styles.badge}>Help Center</div>
+            <h1 className={styles.title}>Frequently Asked Questions</h1>
+            <p className={styles.subtitle}>
+              Everything you need to know about Sling. Can't find an answer?{' '}
+              <Link to="/contact" className={styles.contactLink}>Contact us</Link>.
+            </p>
+          </div>
         </SectionReveal>
       </section>
 

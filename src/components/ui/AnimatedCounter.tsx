@@ -1,33 +1,34 @@
 import { useEffect, useRef, useState } from 'react';
+import { useInView } from 'framer-motion';
 
 type AnimatedCounterProps = {
   target: number;
   duration?: number;
-  suffix?: string;
 };
 
-export default function AnimatedCounter({ target, duration = 2000, suffix = '' }: AnimatedCounterProps) {
-  const [current, setCurrent] = useState(0);
-  const rafRef = useRef<number>(0);
+export default function AnimatedCounter({ target, duration = 1800 }: AnimatedCounterProps) {
+  const [count, setCount] = useState(0);
+  const ref = useRef<HTMLSpanElement>(null);
+  const isInView = useInView(ref, { once: true });
+  const started = useRef(false);
 
   useEffect(() => {
-    if (target === 0) return;
-    const start = performance.now();
-    const startVal = 0;
+    if (!isInView || started.current) return;
+    started.current = true;
 
-    const tick = (now: number) => {
-      const elapsed = now - start;
+    const start = Date.now();
+    const startVal = Math.max(0, target - Math.floor(target * 0.15));
+
+    const tick = () => {
+      const elapsed = Date.now() - start;
       const progress = Math.min(elapsed / duration, 1);
       const eased = 1 - Math.pow(1 - progress, 3);
-      setCurrent(Math.round(startVal + (target - startVal) * eased));
-      if (progress < 1) {
-        rafRef.current = requestAnimationFrame(tick);
-      }
+      setCount(Math.floor(startVal + (target - startVal) * eased));
+      if (progress < 1) requestAnimationFrame(tick);
     };
 
-    rafRef.current = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(rafRef.current);
-  }, [target, duration]);
+    requestAnimationFrame(tick);
+  }, [isInView, target, duration]);
 
-  return <>{current.toLocaleString()}{suffix}</>;
+  return <span ref={ref}>{count.toLocaleString()}</span>;
 }

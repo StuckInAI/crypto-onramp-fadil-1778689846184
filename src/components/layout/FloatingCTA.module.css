@@ -1,32 +1,22 @@
 .wrapper {
   position: fixed;
-  bottom: var(--space-xl);
-  right: var(--space-xl);
+  bottom: 32px;
+  right: 32px;
   z-index: 90;
-  opacity: 0;
-  transform: translateY(16px);
-  pointer-events: none;
-  transition: opacity var(--transition-base), transform var(--transition-base);
-}
-
-.wrapper.visible {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
 }
 
 .btn {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 13px 24px;
-  background: linear-gradient(135deg, var(--color-purple), var(--color-cyan));
-  color: white;
+  padding: 13px 28px;
+  background: linear-gradient(135deg, var(--color-green), var(--color-cyan));
+  color: #0A0A0F;
   font-weight: 700;
   font-size: 14px;
   border-radius: var(--radius-full);
-  box-shadow: var(--shadow-purple);
+  box-shadow: var(--shadow-green), 0 8px 32px rgba(0, 0, 0, 0.4);
   transition: opacity var(--transition-fast), transform var(--transition-fast);
+  white-space: nowrap;
 }
 
 .btn:hover {
@@ -36,7 +26,11 @@
 
 @media (max-width: 480px) {
   .wrapper {
-    bottom: var(--space-lg);
-    right: var(--space-md);
+    bottom: 20px;
+    right: 20px;
+  }
+  .btn {
+    padding: 11px 22px;
+    font-size: 13px;
   }
 }

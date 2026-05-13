@@ -16,9 +16,12 @@ export default function GlassCard({ children, className, glow = 'none', onClick 
         glow === 'green' && styles.glowGreen,
         glow === 'purple' && styles.glowPurple,
         glow === 'cyan' && styles.glowCyan,
+        onClick && styles.clickable,
         className
       )}
       onClick={onClick}
+      role={onClick ? 'button' : undefined}
+      tabIndex={onClick ? 0 : undefined}
     >
       {children}
     </div>

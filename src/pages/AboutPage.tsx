@@ -5,12 +5,12 @@ import GlassCard from '@/components/ui/GlassCard';
 import styles from './AboutPage.module.css';
 
 const WHY_FEATURES = [
-  { icon: <Globe size={22} />, title: 'Local Payments', desc: 'JazzCash and EasyPaisa are already in millions of Pakistani hands. We meet you where you are.', color: 'var(--color-green)' },
-  { icon: <Zap size={22} />, title: 'Instant Conversion', desc: 'Your PKR becomes crypto in seconds, not days. No waiting, no delays.', color: 'var(--color-purple)' },
-  { icon: <Lock size={22} />, title: 'Secure Trading', desc: 'Multi-layer security with full KYC verification and AML compliance.', color: 'var(--color-cyan)' },
-  { icon: <DollarSign size={22} />, title: 'PKR Friendly', desc: 'All rates and prices displayed in PKR with competitive conversion fees.', color: 'var(--color-green)' },
-  { icon: <Users size={22} />, title: 'Community First', desc: 'Built by Pakistanis, for Pakistanis. We understand the local market.', color: 'var(--color-purple)' },
-  { icon: <Shield size={22} />, title: 'Regulated & Safe', desc: 'Compliant with Pakistani financial regulations and international crypto standards.', color: 'var(--color-cyan)' },
+  { icon: <Globe size={20} />, title: 'Local Payments', desc: 'JazzCash and EasyPaisa are already in millions of Pakistani hands. We meet you where you are.', color: 'var(--color-green)' },
+  { icon: <Zap size={20} />, title: 'Instant Conversion', desc: 'Your PKR becomes crypto in seconds, not days. No waiting, no delays.', color: 'var(--color-purple)' },
+  { icon: <Lock size={20} />, title: 'Secure Trading', desc: 'Multi-layer security with full KYC verification and AML compliance.', color: 'var(--color-cyan)' },
+  { icon: <DollarSign size={20} />, title: 'PKR Friendly', desc: 'All rates and prices displayed in PKR with competitive conversion fees.', color: 'var(--color-green)' },
+  { icon: <Users size={20} />, title: 'Community First', desc: 'Built by Pakistanis, for Pakistanis. We understand the local market.', color: 'var(--color-purple)' },
+  { icon: <Shield size={20} />, title: 'Regulated & Safe', desc: 'Compliant with Pakistani financial regulations and international crypto standards.', color: 'var(--color-cyan)' },
 ];
 
 const TEAM = [
@@ -28,8 +28,8 @@ export default function AboutPage() {
         <div className={styles.headerGlow} aria-hidden="true" />
         <div className={styles.headerContent}>
           <motion.span
-            className={styles.label}
-            initial={{ opacity: 0, y: -16 }}
+            className={styles.badge}
+            initial={{ opacity: 0, y: -14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
           >
@@ -75,7 +75,7 @@ export default function AboutPage() {
           </SectionReveal>
           <SectionReveal delay={0.15}>
             <GlassCard className={styles.solutionCard} glow="green">
-              <span className={styles.sectionLabel} style={{ color: 'var(--color-green)' }}>The Solution</span>
+              <span className={styles.solutionLabel}>The Solution</span>
               <h3 className={styles.solutionTitle}>Sling bridges local money with global crypto</h3>
               <ul className={styles.solutionList}>
                 <li>✅ Pay with JazzCash or EasyPaisa</li>
@@ -90,7 +90,7 @@ export default function AboutPage() {
       </section>
 
       {/* Why Sling */}
-      <section className={styles.section}>
+      <section className={styles.whySection}>
         <SectionReveal>
           <div className={styles.sectionHeader}>
             <span className={styles.sectionLabel}>Why Sling</span>
@@ -101,7 +101,7 @@ export default function AboutPage() {
           {WHY_FEATURES.map((f, i) => (
             <SectionReveal key={f.title} delay={i * 0.08}>
               <GlassCard className={styles.featureCard} glow="purple">
-                <div className={styles.featureIcon} style={{ color: f.color, background: `${f.color}18` }}>
+                <div className={styles.featureIcon} style={{ color: f.color, background: `${f.color}18`, borderColor: `${f.color}30` }}>
                   {f.icon}
                 </div>
                 <h3 className={styles.featureTitle}>{f.title}</h3>

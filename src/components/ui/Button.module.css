@@ -10,6 +10,7 @@
   border: none;
   font-family: var(--font-body);
   white-space: nowrap;
+  line-height: 1;
 }
 
 .btn:hover:not(:disabled) {
@@ -19,9 +20,9 @@
 .btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+  transform: none;
 }
 
-/* Variants */
 .primary {
   background: linear-gradient(135deg, var(--color-green), var(--color-cyan));
   color: #0A0A0F;
@@ -56,10 +57,10 @@
   border: 1px solid var(--color-border);
 }
 .ghost:hover:not(:disabled) {
-  border-color: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.06);
 }
 
-/* Sizes */
 .sm {
   padding: 8px 18px;
   font-size: 13px;
@@ -70,7 +71,7 @@
 }
 .lg {
   padding: 15px 36px;
-  font-size: 17px;
+  font-size: 16px;
 }
 
 .fullWidth {

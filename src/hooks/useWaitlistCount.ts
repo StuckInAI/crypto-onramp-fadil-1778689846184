@@ -1,14 +1,13 @@
 import { useState, useEffect } from 'react';
 import { getWaitlistCount } from '@/lib/waitlist';
 
-export function useWaitlistCount() {
-  const [count, setCount] = useState<number>(0);
+export function useWaitlistCount(): number {
+  const [count, setCount] = useState(() => getWaitlistCount());
 
   useEffect(() => {
-    setCount(getWaitlistCount());
     const interval = setInterval(() => {
       setCount(getWaitlistCount());
-    }, 5000);
+    }, 3000);
     return () => clearInterval(interval);
   }, []);
 

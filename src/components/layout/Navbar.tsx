@@ -22,7 +22,7 @@ export default function Navbar() {
   return (
     <header className={clsx(styles.navbar, isScrolled && styles.scrolled)}>
       <div className={styles.inner}>
-        <Link to="/" className={styles.logo}>
+        <Link to="/" className={styles.logo} onClick={() => setMenuOpen(false)}>
           <span className={styles.logoMark}>S</span>
           <span className={styles.logoText}>SLING</span>
         </Link>

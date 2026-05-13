@@ -2,27 +2,25 @@ import type { WaitlistEntry } from '@/types';
 
 const STORAGE_KEY = 'sling_waitlist';
 
-function generateReferralCode(name: string): string {
-  const base = name.replace(/\s+/g, '').toUpperCase().slice(0, 4);
-  const rand = Math.random().toString(36).substring(2, 6).toUpperCase();
-  return `SLG-${base}${rand}`;
+function generateCode(): string {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let code = 'SLG-';
+  for (let i = 0; i < 6; i++) {
+    code += chars[Math.floor(Math.random() * chars.length)];
+  }
+  return code;
 }
 
-function generateId(): string {
-  return Math.random().toString(36).substring(2) + Date.now().toString(36);
-}
-
-export function getWaitlist(): WaitlistEntry[] {
+function loadEntries(): WaitlistEntry[] {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return [];
-    return JSON.parse(raw) as WaitlistEntry[];
+    return raw ? JSON.parse(raw) : [];
   } catch {
     return [];
   }
 }
 
-function saveWaitlist(entries: WaitlistEntry[]): void {
+function saveEntries(entries: WaitlistEntry[]): void {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
 }
 
@@ -30,59 +28,56 @@ export function addToWaitlist(
   name: string,
   email: string,
   phone: string,
-  referredByCode?: string
-): { entry: WaitlistEntry; isNew: boolean } {
-  const entries = getWaitlist();
+  referredBy?: string
+): { entry: WaitlistEntry; alreadyExists: boolean } {
+  const entries = loadEntries();
 
   const existing = entries.find((e) => e.email.toLowerCase() === email.toLowerCase());
   if (existing) {
-    return { entry: existing, isNew: false };
+    return { entry: existing, alreadyExists: true };
   }
 
-  const referralCode = generateReferralCode(name);
-  const position = entries.length + 1;
+  let referralCode = generateCode();
+  while (entries.find((e) => e.referralCode === referralCode)) {
+    referralCode = generateCode();
+  }
 
   const newEntry: WaitlistEntry = {
-    id: generateId(),
+    id: crypto.randomUUID(),
     name,
     email,
     phone,
     referralCode,
-    referredBy: referredByCode || null,
+    referredBy: referredBy || null,
     referralCount: 0,
-    position,
+    position: entries.length + 1,
     createdAt: new Date().toISOString(),
   };
 
-  let updatedEntries = [...entries, newEntry];
+  const updatedEntries = [...entries, newEntry];
 
-  if (referredByCode) {
-    updatedEntries = updatedEntries.map((e) => {
-      if (e.referralCode === referredByCode) {
-        const newCount = e.referralCount + 1;
-        const boost = 5;
-        const newPosition = Math.max(1, e.position - boost);
-        return { ...e, referralCount: newCount, position: newPosition };
-      }
-      return e;
-    });
-
-    updatedEntries = updatedEntries
-      .sort((a, b) => a.position - b.position)
-      .map((e, i) => ({ ...e, position: i + 1 }));
+  if (referredBy) {
+    const referrerIdx = updatedEntries.findIndex(
+      (e) => e.referralCode === referredBy && e.id !== newEntry.id
+    );
+    if (referrerIdx !== -1) {
+      updatedEntries[referrerIdx] = {
+        ...updatedEntries[referrerIdx],
+        referralCount: updatedEntries[referrerIdx].referralCount + 1,
+        position: Math.max(1, updatedEntries[referrerIdx].position - 5),
+      };
+    }
   }
 
-  saveWaitlist(updatedEntries);
-
-  const saved = updatedEntries.find((e) => e.email === email);
-  return { entry: saved || newEntry, isNew: true };
+  saveEntries(updatedEntries);
+  return { entry: newEntry, alreadyExists: false };
 }
 
 export function getWaitlistStatus(email: string): WaitlistEntry | null {
-  const entries = getWaitlist();
+  const entries = loadEntries();
   return entries.find((e) => e.email.toLowerCase() === email.toLowerCase()) || null;
 }
 
 export function getWaitlistCount(): number {
-  return getWaitlist().length;
+  return loadEntries().length;
 }

@@ -10,25 +10,8 @@ export type WaitlistEntry = {
   createdAt: string;
 };
 
-export type FAQItem = {
-  question: string;
-  answer: string;
-};
-
-export type ContactForm = {
+export type ContactFormData = {
   name: string;
   email: string;
   message: string;
-};
-
-export type WaitlistForm = {
-  name: string;
-  email: string;
-  phone: string;
-  referralCode?: string;
-};
-
-export type NavLink = {
-  label: string;
-  href: string;
 };

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Copy, Check, Share2, ArrowRight } from 'lucide-react';
+import { Copy, Check, Share2, ArrowRight, Users } from 'lucide-react';
 import { addToWaitlist, getWaitlistStatus } from '@/lib/waitlist';
 import SectionReveal from '@/components/ui/SectionReveal';
 import GlassCard from '@/components/ui/GlassCard';
@@ -43,18 +43,21 @@ export default function WaitlistPage() {
       setError('Please enter a valid email address.');
       return;
     }
+    if (!/^\d{9,11}$/.test(phone.replace(/\s/g, ''))) {
+      setError('Please enter a valid Pakistani phone number (e.g. 3001234567).');
+      return;
+    }
 
     setLoading(true);
     setTimeout(() => {
-      const { entry } = addToWaitlist(name.trim(), email.trim(), `+92${phone.trim()}`, refCode || undefined);
-      setSuccessEntry(entry);
+      const result = addToWaitlist(name.trim(), email.trim(), `+92${phone.trim()}`, refCode || undefined);
+      setSuccessEntry(result.entry);
       setLoading(false);
     }, 900);
   };
 
-  const handleCopy = () => {
-    if (!successEntry) return;
-    navigator.clipboard.writeText(generateReferralUrl(successEntry.referralCode));
+  const handleCopy = (text: string) => {
+    navigator.clipboard.writeText(text).catch(() => {});
     setCopied(true);
     setTimeout(() => setCopied(false), 2500);
   };
@@ -62,6 +65,8 @@ export default function WaitlistPage() {
   const handleLookup = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLookupError('');
+    setLookedUpEntry(null);
+    if (!lookupEmail.trim()) return;
     const entry = getWaitlistStatus(lookupEmail.trim());
     if (entry) {
       setLookedUpEntry(entry);
@@ -72,16 +77,17 @@ export default function WaitlistPage() {
 
   const referralUrl = successEntry ? generateReferralUrl(successEntry.referralCode) : '';
   const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(`Join me on Sling — Pakistan's crypto on-ramp! Use my referral link: ${referralUrl}`)}`;
-  const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(`I just joined the @SlingPK waitlist — Pakistan's gateway to crypto! 🚀 Join with my link:`)} &url=${encodeURIComponent(referralUrl)}`;
+  const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent("I just joined the @SlingPK waitlist — Pakistan's gateway to crypto! 🚀 Join with my link: " + referralUrl)}`;
 
   return (
     <main className={styles.page}>
+      {/* Header */}
       <section className={styles.header}>
         <div className={styles.headerGlow} aria-hidden="true" />
         <div className={styles.headerContent}>
           <motion.span
-            className={styles.label}
-            initial={{ opacity: 0, y: -16 }}
+            className={styles.badge}
+            initial={{ opacity: 0, y: -14 }}
             animate={{ opacity: 1, y: 0 }}
           >
             Early Access
@@ -101,11 +107,13 @@ export default function WaitlistPage() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
           >
-            Be among the first to experience Pakistan's crypto on-ramp. Refer friends to move up the queue.
+            Be among the first to experience Pakistan's crypto on-ramp.
+            Refer friends to move up the queue.
           </motion.p>
         </div>
       </section>
 
+      {/* Main content */}
       <div className={styles.content}>
         <AnimatePresence mode="wait">
           {!successEntry ? (
@@ -113,116 +121,115 @@ export default function WaitlistPage() {
               key="form"
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -24 }}
-              className={styles.formWrapper}
+              exit={{ opacity: 0, y: -16 }}
+              transition={{ duration: 0.35 }}
+              className={styles.twoCol}
             >
+              {/* Sign-up form */}
               <GlassCard className={styles.formCard} glow="green">
-                <h2 className={styles.formTitle}>Secure your spot</h2>
-                <p className={styles.formSub}>Complete your profile to join the waitlist.</p>
+                <div className={styles.formHeader}>
+                  <h2 className={styles.formTitle}>Secure your spot</h2>
+                  <p className={styles.formSub}>Complete your profile to join the waitlist.</p>
+                </div>
 
                 {refCode && (
                   <div className={styles.refNotice}>
-                    🎉 You were referred! Your friend will move up the queue when you sign up.
+                    🎉 You were referred! Your referrer will move up the queue when you sign up.
                   </div>
                 )}
 
                 <form onSubmit={handleSubmit} className={styles.form} noValidate>
                   <div className={styles.field}>
-                    <label className={styles.label2} htmlFor="name">Full Name</label>
+                    <label className={styles.fieldLabel} htmlFor="name">Full Name</label>
                     <input
                       id="name"
                       type="text"
                       value={name}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
+                      onChange={(e) => setName(e.target.value)}
                       placeholder="Ahmed Khan"
                       className={styles.input}
                       autoComplete="name"
-                      required
                     />
                   </div>
                   <div className={styles.field}>
-                    <label className={styles.label2} htmlFor="email">Email Address</label>
+                    <label className={styles.fieldLabel} htmlFor="email">Email Address</label>
                     <input
                       id="email"
                       type="email"
                       value={email}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+                      onChange={(e) => setEmail(e.target.value)}
                       placeholder="ahmed@example.com"
                       className={styles.input}
                       autoComplete="email"
-                      required
                     />
                   </div>
                   <div className={styles.field}>
-                    <label className={styles.label2} htmlFor="phone">Phone Number</label>
+                    <label className={styles.fieldLabel} htmlFor="phone">Phone Number</label>
                     <div className={styles.phoneRow}>
                       <span className={styles.phonePrefix}>+92</span>
                       <input
                         id="phone"
                         type="tel"
                         value={phone}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPhone(e.target.value)}
+                        onChange={(e) => setPhone(e.target.value)}
                         placeholder="3001234567"
                         className={`${styles.input} ${styles.phoneInput}`}
                         autoComplete="tel"
-                        required
                       />
                     </div>
                   </div>
 
                   {error && <p className={styles.errorMsg}>{error}</p>}
 
-                  <Button
-                    type="submit"
-                    variant="primary"
-                    size="lg"
-                    fullWidth
-                    disabled={loading}
-                  >
-                    {loading ? 'Joining...' : <>Join Waitlist <ArrowRight size={18} /></>}
+                  <Button type="submit" variant="primary" size="lg" fullWidth disabled={loading}>
+                    {loading ? 'Joining...' : <><span>Join Waitlist</span> <ArrowRight size={17} /></>}
                   </Button>
                 </form>
               </GlassCard>
 
-              {/* Lookup section */}
-              <SectionReveal delay={0.2}>
+              {/* Lookup card */}
+              <SectionReveal delay={0.15}>
                 <GlassCard className={styles.lookupCard}>
+                  <div className={styles.lookupIcon}>
+                    <Users size={22} color="var(--color-purple)" />
+                  </div>
                   <h3 className={styles.lookupTitle}>Already signed up?</h3>
-                  <p className={styles.lookupSub}>Check your position and referral link.</p>
+                  <p className={styles.lookupSub}>Check your queue position and referral link.</p>
                   <form onSubmit={handleLookup} className={styles.lookupForm}>
                     <input
                       type="email"
                       value={lookupEmail}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => setLookupEmail(e.target.value)}
+                      onChange={(e) => setLookupEmail(e.target.value)}
                       placeholder="Your email address"
                       className={styles.input}
                     />
-                    <Button type="submit" variant="ghost" size="md">
-                      Check Status
-                    </Button>
+                    <Button type="submit" variant="ghost" size="md">Check Status</Button>
                   </form>
                   {lookupError && <p className={styles.errorMsg}>{lookupError}</p>}
                   {lookedUpEntry && (
                     <div className={styles.lookupResult}>
                       <div className={styles.statRow}>
-                        <div className={styles.stat}>
+                        <div className={styles.statBox}>
                           <span className={styles.statNum}>#{lookedUpEntry.position}</span>
                           <span className={styles.statLabel}>Queue Position</span>
                         </div>
-                        <div className={styles.stat}>
+                        <div className={styles.statDivider} />
+                        <div className={styles.statBox}>
                           <span className={styles.statNum}>{lookedUpEntry.referralCount}</span>
                           <span className={styles.statLabel}>Referrals</span>
                         </div>
                       </div>
                       <div className={styles.refLinkBox}>
-                        <span className={styles.refLinkText}>{generateReferralUrl(lookedUpEntry.referralCode)}</span>
+                        <span className={styles.refLinkText}>
+                          {generateReferralUrl(lookedUpEntry.referralCode)}
+                        </span>
                         <button
                           type="button"
-                          onClick={() => { navigator.clipboard.writeText(generateReferralUrl(lookedUpEntry.referralCode)); }}
+                          onClick={() => handleCopy(generateReferralUrl(lookedUpEntry.referralCode))}
                           className={styles.copyBtn}
                           aria-label="Copy referral link"
                         >
-                          <Copy size={14} />
+                          {copied ? <Check size={13} /> : <Copy size={13} />}
                         </button>
                       </div>
                     </div>
@@ -233,49 +240,52 @@ export default function WaitlistPage() {
           ) : (
             <motion.div
               key="success"
-              initial={{ opacity: 0, scale: 0.95 }}
+              initial={{ opacity: 0, scale: 0.96 }}
               animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.35 }}
               className={styles.successWrapper}
             >
               <GlassCard className={styles.successCard} glow="green">
-                <div className={styles.successIcon}>🎉</div>
+                <div className={styles.successEmoji}>🎉</div>
                 <h2 className={styles.successTitle}>You're on the list!</h2>
                 <p className={styles.successSub}>
-                  Welcome to Sling, <strong>{successEntry.name}</strong>. We'll notify you at{' '}
+                  Welcome, <strong>{successEntry.name}</strong>! We'll notify you at{' '}
                   <strong>{successEntry.email}</strong> when you get access.
                 </p>
 
                 <div className={styles.statsRow}>
-                  <div className={styles.statBox}>
+                  <div className={styles.statBox2}>
                     <span className={styles.statBig}>#{successEntry.position}</span>
                     <span className={styles.statSmall}>Your Position</span>
                   </div>
                   <div className={styles.statDivider} />
-                  <div className={styles.statBox}>
+                  <div className={styles.statBox2}>
                     <span className={styles.statBig}>{successEntry.referralCount}</span>
                     <span className={styles.statSmall}>Referrals</span>
                   </div>
                   <div className={styles.statDivider} />
-                  <div className={styles.statBox}>
-                    <span className={styles.statBig} style={{ color: 'var(--color-green)', fontSize: '14px' }}>{successEntry.referralCode}</span>
+                  <div className={styles.statBox2}>
+                    <span className={styles.statCode}>{successEntry.referralCode}</span>
                     <span className={styles.statSmall}>Your Code</span>
                   </div>
                 </div>
 
                 <div className={styles.referralSection}>
-                  <p className={styles.referralTitle}>
-                    <Share2 size={16} /> Refer friends to move up
-                  </p>
+                  <div className={styles.referralHeader}>
+                    <Share2 size={16} />
+                    <span>Refer friends to move up the queue</span>
+                  </div>
                   <p className={styles.referralHint}>Each referral moves you up 5 positions!</p>
+
                   <div className={styles.refLinkBox}>
                     <span className={styles.refLinkText}>{referralUrl}</span>
                     <button
                       type="button"
-                      onClick={handleCopy}
+                      onClick={() => handleCopy(referralUrl)}
                       className={styles.copyBtn}
                       aria-label="Copy referral link"
                     >
-                      {copied ? <Check size={14} /> : <Copy size={14} />}
+                      {copied ? <Check size={13} /> : <Copy size={13} />}
                     </button>
                   </div>
 
@@ -284,8 +294,7 @@ export default function WaitlistPage() {
                       href={whatsappUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={styles.shareBtn}
-                      style={{ background: '#25D366', color: 'white' }}
+                      className={`${styles.shareBtn} ${styles.shareBtnWa}`}
                     >
                       WhatsApp
                     </a>
@@ -293,15 +302,14 @@ export default function WaitlistPage() {
                       href={twitterUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={styles.shareBtn}
-                      style={{ background: '#1DA1F2', color: 'white' }}
+                      className={`${styles.shareBtn} ${styles.shareBtnTw}`}
                     >
                       Twitter / X
                     </a>
                     <button
                       type="button"
-                      onClick={handleCopy}
-                      className={`${styles.shareBtn} ${styles.shareBtnGhost}`}
+                      onClick={() => handleCopy(referralUrl)}
+                      className={`${styles.shareBtn} ${styles.shareBtnCopy}`}
                     >
                       {copied ? '✓ Copied!' : 'Copy Link'}
                     </button>

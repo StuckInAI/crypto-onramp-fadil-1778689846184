@@ -40,10 +40,10 @@ const STEPS = [
 ];
 
 const FEATURES = [
-  { icon: <Shield size={24} />, title: 'Secure & Verified', desc: 'Bank-grade encryption with full KYC compliance.' },
-  { icon: <Zap size={24} />, title: 'Instant Conversion', desc: 'Real-time rates with zero hidden fees.' },
-  { icon: <Globe size={24} />, title: 'Built for Pakistan', desc: 'JazzCash, EasyPaisa — payment methods you already use.' },
-  { icon: <TrendingUp size={24} />, title: 'Trade & Earn', desc: 'Full trading dashboard coming at launch.' },
+  { icon: <Shield size={22} />, title: 'Secure & Verified', desc: 'Bank-grade encryption with full KYC compliance.' },
+  { icon: <Zap size={22} />, title: 'Instant Conversion', desc: 'Real-time rates with zero hidden fees.' },
+  { icon: <Globe size={22} />, title: 'Built for Pakistan', desc: 'JazzCash, EasyPaisa — payment methods you already use.' },
+  { icon: <TrendingUp size={22} />, title: 'Trade & Earn', desc: 'Full trading dashboard coming at launch.' },
 ];
 
 export default function HomePage() {
@@ -58,9 +58,9 @@ export default function HomePage() {
         <div className={styles.heroGradient} aria-hidden="true" />
         <div className={styles.heroContent}>
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
+            initial={{ opacity: 0, y: -16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.45 }}
             className={styles.heroBadge}
           >
             <span className={styles.heroBadgeDot} />
@@ -69,9 +69,9 @@ export default function HomePage() {
 
           <motion.h1
             className={styles.heroTitle}
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 32 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
+            transition={{ duration: 0.55, delay: 0.1 }}
           >
             Pakistan's{' '}
             <span className="gradient-text-green">Gateway</span>
@@ -83,7 +83,7 @@ export default function HomePage() {
             className={styles.heroSub}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
           >
             Buy BTC, ETH & USDT with JazzCash or EasyPaisa.
             <br />
@@ -94,7 +94,7 @@ export default function HomePage() {
             className={styles.heroActions}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
           >
             <Link to="/waitlist" className={styles.primaryBtn}>
               Join the Waitlist <ArrowRight size={18} />
@@ -106,12 +106,12 @@ export default function HomePage() {
 
           <motion.div
             className={styles.tokenRow}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
           >
             {TOKENS.map((t, i) => (
-              <TokenBadge key={t.symbol} {...t} delay={0.5 + i * 0.1} />
+              <TokenBadge key={t.symbol} {...t} delay={0.45 + i * 0.08} />
             ))}
           </motion.div>
 
@@ -119,7 +119,7 @@ export default function HomePage() {
             className={styles.counterText}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.8 }}
+            transition={{ delay: 0.7 }}
           >
             <span className={styles.counterNum}>
               <AnimatedCounter target={displayCount} />
@@ -131,7 +131,7 @@ export default function HomePage() {
         <a href="#how-it-works" className={styles.scrollHint} aria-label="Scroll to how it works">
           <motion.div
             animate={{ y: [0, 8, 0] }}
-            transition={{ repeat: Infinity, duration: 1.8 }}
+            transition={{ repeat: Infinity, duration: 1.8, ease: 'easeInOut' }}
           >
             <ChevronDown size={24} color="var(--color-text-muted)" />
           </motion.div>
@@ -150,11 +150,11 @@ export default function HomePage() {
 
         <div className={styles.stepsGrid}>
           {STEPS.map((step, i) => (
-            <SectionReveal key={step.step} delay={i * 0.15}>
+            <SectionReveal key={step.step} delay={i * 0.12}>
               <GlassCard className={styles.stepCard} glow="green">
                 <div className={styles.stepNumber} style={{ color: step.color }}>{step.step}</div>
                 <div className={styles.stepIcon}>{step.icon}</div>
-                <h3 className={styles.stepTitle} style={{ color: step.color }}>{step.title}</h3>
+                <h3 className={styles.stepTitle}>{step.title}</h3>
                 <p className={styles.stepDesc}>{step.desc}</p>
                 <div className={styles.stepLine} style={{ background: step.color }} />
               </GlassCard>
@@ -169,10 +169,12 @@ export default function HomePage() {
           <div className={styles.paymentInner}>
             <p className={styles.paymentLabel}>Accepted Payment Methods</p>
             <div className={styles.paymentBadges}>
-              <div className={styles.paymentBadge} style={{ color: 'var(--color-green)', borderColor: 'var(--color-green)' }}>
+              <div className={styles.paymentBadge} style={{ color: 'var(--color-green)', borderColor: 'rgba(0,255,148,0.4)' }}>
+                <span className={styles.paymentDot} style={{ background: 'var(--color-green)' }} />
                 JazzCash
               </div>
-              <div className={styles.paymentBadge} style={{ color: 'var(--color-cyan)', borderColor: 'var(--color-cyan)' }}>
+              <div className={styles.paymentBadge} style={{ color: 'var(--color-cyan)', borderColor: 'rgba(0,212,255,0.4)' }}>
+                <span className={styles.paymentDot} style={{ background: 'var(--color-cyan)' }} />
                 EasyPaisa
               </div>
             </div>
@@ -208,7 +210,7 @@ export default function HomePage() {
             <div className={styles.ctaBannerGlow} aria-hidden="true" />
             <h2 className={styles.ctaBannerTitle}>Ready to join the future of finance?</h2>
             <p className={styles.ctaBannerSub}>Secure your spot on the waitlist today.</p>
-            <Link to="/waitlist" className={styles.primaryBtn}>
+            <Link to="/waitlist" className={styles.primaryBtn} style={{ position: 'relative', zIndex: 1 }}>
               Get Early Access <ArrowRight size={18} />
             </Link>
           </div>
